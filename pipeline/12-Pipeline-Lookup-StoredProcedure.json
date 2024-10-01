@@ -1,0 +1,96 @@
+{
+	"name": "12-Pipeline-Lookup-StoredProcedure",
+	"properties": {
+		"activities": [
+			{
+				"name": "CariCompanyName",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "CustIDnya",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[cariCompanyName]",
+						"storedProcedureParameters": {
+							"pCustomerID": {
+								"type": "Int32",
+								"value": {
+									"value": "@variables('custIDnya')",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "storage1dbsqlserver_storage1dbsql_customerGabungan1",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "CustIDnya",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "custIDnya",
+					"value": 277
+				}
+			},
+			{
+				"name": "hasilLookup",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "CariCompanyName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "hasilLookup",
+					"value": {
+						"value": "@activity('CariCompanyName').output.firstRow.CompanyName",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"custIDnya": {
+				"type": "Integer"
+			},
+			"hasilLookup": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-09-29T17:16:15Z"
+	}
+}
