@@ -1,0 +1,16 @@
+{
+	"name": "storage1dbsqlserver_storage1dbsql_customerGabungan",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "storage1dbsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CustomersGabung"
+		}
+	}
+}

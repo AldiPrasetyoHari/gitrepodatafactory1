@@ -1,0 +1,22 @@
+{
+	"name": "storage1blobadls_dynamicfileNameCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "storage1blobadls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
